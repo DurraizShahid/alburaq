@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Clock3, CornerDownLeft, Search, ShoppingBag, Sparkles, X } from "lucide-react"
+import { Clock3, CornerDownLeft, Menu, Search, ShoppingBag, Sparkles, X } from "lucide-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 import { useCart } from "@/components/cart-provider"
@@ -18,6 +18,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { useHasMounted } from "@/hooks/use-has-mounted"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Input } from "@/components/ui/input"
@@ -237,7 +246,7 @@ function SearchAssistRow({
       </button>
 
       {showPrimaryNav ? (
-        <div className="flex flex-wrap items-center gap-2 md:ml-auto">
+        <div className="hidden flex-wrap items-center gap-2 md:ml-auto md:flex">
           {primaryNavLinks.map((link) => (
             <Button key={link.href} type="button" variant="ghost" size="sm" asChild>
               <Link href={link.href}>{link.label}</Link>
@@ -499,6 +508,7 @@ export function GlobalSearchBar() {
 }
 
 function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
+  const pathname = usePathname()
   const router = useRouter()
   const { itemCount, openCart, hasHydrated } = useCart()
   const hasMounted = useHasMounted()
@@ -523,6 +533,7 @@ function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
   })
   const [isOpen, setIsOpen] = useState(false)
   const [isPaletteOpen, setIsPaletteOpen] = useState(false)
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
 
@@ -545,6 +556,19 @@ function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
     setIsPaletteOpen(false)
     setActiveIndex(-1)
   }, [])
+
+  const openPalette = useCallback(() => {
+    setIsMobileNavOpen(false)
+    setIsOpen(false)
+    setIsPaletteOpen(true)
+    setActiveIndex(-1)
+  }, [])
+
+  const openCartPanel = useCallback(() => {
+    setIsMobileNavOpen(false)
+    closeSearchSurfaces()
+    openCart()
+  }, [closeSearchSurfaces, openCart])
 
   const saveRecent = useCallback((value: string) => {
     if (typeof window === "undefined") return
@@ -853,6 +877,7 @@ function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
         className="fixed inset-x-0 top-0 z-40 border-b border-border/50 bg-background/78 backdrop-blur-xl"
       >
         <div className="mx-auto w-full max-w-7xl px-4 py-3 md:px-8 lg:px-12">
+          <Sheet open={isMobileNavOpen} onOpenChange={setIsMobileNavOpen}>
           <form
             onSubmit={(event) => {
               event.preventDefault()
@@ -860,24 +885,58 @@ function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
             }}
             className="relative grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start lg:grid-cols-[auto_minmax(0,1fr)_auto_auto]"
           >
-            <div className="flex flex-col items-start justify-center gap-0 self-center sm:col-span-2 lg:col-span-1">
-              <Link href="/" className="inline-flex items-center self-start">
-                <Image
-                  src="/logo-dark.png"
-                  alt="Alburaq Atelier logo"
-                  width={344}
-                  height={94}
-                  priority
-                  className="h-auto w-[150px] md:w-[170px]"
+            <div className="flex items-start justify-between gap-3 self-center sm:col-span-2 lg:col-span-1">
+              <div className="flex flex-col items-start justify-center gap-0">
+                <Link href="/" className="inline-flex items-center self-start">
+                  <Image
+                    src="/logo-dark.png"
+                    alt="Alburaq Atelier logo"
+                    width={344}
+                    height={94}
+                    priority
+                    className="h-auto w-[150px] md:w-[170px]"
+                  />
+                </Link>
+                <ShinyText
+                  text="Perfume as atmosphere."
+                  speed={4}
+                  className="ml-1 text-[9px] leading-none tracking-[0.24em] uppercase"
+                  color="#8f7046"
+                  shineColor="#f3dba7"
                 />
-              </Link>
-              <ShinyText
-                text="Perfume as atmosphere."
-                speed={4}
-                className="ml-1 text-[9px] leading-none tracking-[0.24em] uppercase"
-                color="#8f7046"
-                shineColor="#f3dba7"
-              />
+              </div>
+
+              <div className="flex items-center gap-2 md:hidden">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={openPalette}
+                  className="h-11 w-11 rounded-full"
+                >
+                  <Search className="size-4" />
+                  <span className="sr-only">Open search palette</span>
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={openCartPanel}
+                  className="relative h-11 w-11 rounded-full"
+                >
+                  <ShoppingBag className="size-4" />
+                  <span className="sr-only">Open cart</span>
+                  <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 py-0.5 text-[10px] leading-none text-primary-foreground">
+                    {hasMounted && hasHydrated ? itemCount : 0}
+                  </span>
+                </Button>
+                <SheetTrigger asChild>
+                  <Button type="button" variant="outline" size="icon" className="h-11 w-11 rounded-full">
+                    <Menu className="size-4" />
+                    <span className="sr-only">Open navigation menu</span>
+                  </Button>
+                </SheetTrigger>
+              </div>
             </div>
 
             <div className="luxury-panel relative min-w-0 overflow-hidden rounded-none bg-background/70 px-1 py-1 shadow-[0_10px_24px_rgba(75,55,28,0.08)] sm:col-span-2 lg:col-span-1 dark:bg-muted/30">
@@ -909,12 +968,8 @@ function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
             <Button
               type="button"
               variant="outline"
-              onClick={() => {
-                setIsOpen(false)
-                setIsPaletteOpen(true)
-                setActiveIndex(-1)
-              }}
-              className="h-13 w-full rounded-none px-4 sm:w-auto sm:px-5"
+              onClick={openPalette}
+              className="hidden h-13 w-full rounded-none px-4 sm:w-auto sm:px-5 md:flex"
             >
               <span className="sm:hidden">Palette</span>
               <span className="hidden sm:inline">Open Palette</span>
@@ -923,11 +978,8 @@ function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
             <Button
               type="button"
               variant="outline"
-              onClick={() => {
-                closeSearchSurfaces()
-                openCart()
-              }}
-              className="h-13 w-full rounded-none px-4 sm:w-auto sm:px-5"
+              onClick={openCartPanel}
+              className="hidden h-13 w-full rounded-none px-4 sm:w-auto sm:px-5 md:flex"
             >
               <ShoppingBag />
               <span className="sm:hidden">Cart</span>
@@ -970,6 +1022,65 @@ function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
               </Card>
             ) : null}
           </form>
+            <SheetContent
+              side="left"
+              className="w-[88vw] max-w-sm border-r border-border/60 bg-background p-0 md:hidden"
+            >
+              <SheetHeader className="border-b border-border/60 px-5 pt-5 pb-4 pr-14">
+                <Link href="/" className="inline-flex w-fit items-center" onClick={() => setIsMobileNavOpen(false)}>
+                  <Image
+                    src="/logo-dark.png"
+                    alt="Alburaq Atelier logo"
+                    width={344}
+                    height={94}
+                    className="h-auto w-[140px]"
+                  />
+                </Link>
+                <SheetTitle className="text-left">Browse Alburaq</SheetTitle>
+                <SheetDescription className="text-left">
+                  Shop collections, open the search palette, or jump straight to your cart.
+                </SheetDescription>
+              </SheetHeader>
+
+              <div className="flex h-full flex-col gap-6 px-5 py-5">
+                <nav className="grid gap-2">
+                  {primaryNavLinks.map((link) => {
+                    const isActive =
+                      link.href === "/" ? pathname === link.href : pathname.startsWith(link.href)
+
+                    return (
+                      <SheetClose asChild key={link.href}>
+                        <Link
+                          href={link.href}
+                          className={`rounded-[1rem] border px-4 py-3 text-sm font-medium transition-colors ${
+                            isActive
+                              ? "border-primary/30 bg-primary/10 text-luxury-ink dark:text-foreground"
+                              : "border-border/60 bg-background/75 text-luxury-ink hover:bg-luxury-soft dark:bg-muted/20 dark:text-foreground dark:hover:bg-muted/40"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      </SheetClose>
+                    )
+                  })}
+                </nav>
+
+                <div className="grid gap-2 border-t border-border/60 pt-5">
+                  <Button type="button" variant="outline" className="justify-start rounded-[1rem]" onClick={openPalette}>
+                    <Search className="size-4" />
+                    Open search palette
+                  </Button>
+                  <Button type="button" variant="outline" className="justify-start rounded-[1rem]" onClick={openCartPanel}>
+                    <ShoppingBag className="size-4" />
+                    Open cart
+                    <span className="ml-auto rounded-full bg-primary/10 px-2 py-0.5 text-[10px] leading-none text-primary">
+                      {hasMounted && hasHydrated ? itemCount : 0}
+                    </span>
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
 
