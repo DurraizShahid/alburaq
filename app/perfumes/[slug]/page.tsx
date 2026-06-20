@@ -37,7 +37,7 @@ const NOTE_PYRAMID_LAYOUT: Array<{
     title: "Top notes",
     stage: "0-30 min",
     description: "First lift, sparkle, and the immediate signature on skin.",
-    widthClass: "w-full md:mx-auto md:w-[74%]",
+    widthClass: "w-full xl:mx-auto xl:w-[74%]",
     shellClass:
       "border-primary/28 bg-[linear-gradient(135deg,rgba(252,246,236,0.98),rgba(238,221,190,0.95))]",
     chipClass: "bg-white/75 text-luxury-ink",
@@ -47,7 +47,7 @@ const NOTE_PYRAMID_LAYOUT: Array<{
     title: "Heart notes",
     stage: "30 min-4 hrs",
     description: "Core body of the fragrance once the opening starts to settle.",
-    widthClass: "w-full md:mx-auto md:w-[87%]",
+    widthClass: "w-full xl:mx-auto xl:w-[87%]",
     shellClass:
       "border-border bg-[linear-gradient(135deg,rgba(247,240,230,0.98),rgba(233,221,205,0.94))]",
     chipClass: "bg-luxury-soft/90 text-luxury-ink",
@@ -285,17 +285,17 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
   const leadOccasion = occasionRanking[0]
 
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 py-6 md:px-10 lg:px-12">
-      <section className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-        <Card className="luxury-shell overflow-hidden rounded-[2rem] dark:bg-card lg:col-span-2">
-          <CardContent className="grid gap-6 p-4 lg:grid-cols-[0.95fr_1.05fr]">
-            <div className="luxury-panel rounded-[1.65rem] p-3 dark:bg-muted/30">
-              <div className="luxury-canvas relative h-[30rem] overflow-hidden rounded-[1.45rem] p-3 dark:bg-background/40">
+    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-5 sm:px-6 sm:py-6 md:px-8 lg:px-12">
+      <section className="grid gap-5 md:gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+        <Card className="luxury-shell overflow-hidden rounded-[1.7rem] dark:bg-card sm:rounded-[2rem] lg:col-span-2">
+          <CardContent className="grid gap-5 p-3 sm:p-4 lg:grid-cols-[0.95fr_1.05fr] lg:gap-6">
+            <div className="luxury-panel rounded-[1.45rem] p-2.5 dark:bg-muted/30 sm:rounded-[1.65rem] sm:p-3">
+              <div className="luxury-canvas relative h-[22rem] overflow-hidden rounded-[1.3rem] p-3 dark:bg-background/40 sm:h-[26rem] sm:rounded-[1.45rem] lg:h-[30rem]">
                 <div className="absolute left-3 top-3 z-10 flex flex-wrap gap-2">
-                  <span className="luxury-chip-solid rounded-[1rem] px-4 py-2 text-sm font-medium">
+                  <span className="luxury-chip-solid rounded-[1rem] px-3 py-1.5 text-xs font-medium sm:px-4 sm:py-2 sm:text-sm">
                     {fragrance.family}
                   </span>
-                  <span className="luxury-chip-soft rounded-[1rem] px-4 py-2 text-sm font-medium">
+                  <span className="luxury-chip-soft rounded-[1rem] px-3 py-1.5 text-xs font-medium sm:px-4 sm:py-2 sm:text-sm">
                     {fragrance.oilType || "Fragrance"}
                   </span>
                 </div>
@@ -306,8 +306,8 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                     alt={fragrance.name}
                     fill
                     unoptimized
-                    sizes="(max-width: 1024px) 100vw, 40rem"
-                    className="object-contain p-12"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 40rem"
+                    className="object-contain p-6 sm:p-10 lg:p-12"
                   />
                 ) : (
                   <div className="luxury-copy flex h-full items-center justify-center px-8 text-center text-sm">
@@ -316,58 +316,58 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                 )}
               </div>
 
-              <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
-                <div className="luxury-soft rounded-[1.2rem] px-4 py-3 dark:bg-background/50">
+              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 sm:gap-3">
+                <div className="luxury-soft rounded-[1.1rem] px-3 py-3 dark:bg-background/50 sm:rounded-[1.2rem] sm:px-4">
                   <p className="luxury-meta text-xs uppercase tracking-[0.26em]">Type</p>
-                  <p className="mt-2 font-medium dark:text-foreground">
+                  <p className="mt-2 text-sm font-medium dark:text-foreground sm:text-base">
                     {fragrance.oilType || "Fragrance"}
                   </p>
                 </div>
-                <div className="luxury-soft rounded-[1.2rem] px-4 py-3 dark:bg-background/50">
+                <div className="luxury-soft rounded-[1.1rem] px-3 py-3 dark:bg-background/50 sm:rounded-[1.2rem] sm:px-4">
                   <p className="luxury-meta text-xs uppercase tracking-[0.26em]">Rate</p>
-                  <p className="mt-2 font-medium dark:text-foreground">
+                  <p className="mt-2 text-sm font-medium dark:text-foreground sm:text-base">
                     {fragrance.rating ? fragrance.rating.toFixed(2) : "N/A"}
                   </p>
                 </div>
-                <div className="luxury-soft rounded-[1.2rem] px-4 py-3 dark:bg-background/50">
+                <div className="luxury-soft rounded-[1.1rem] px-3 py-3 dark:bg-background/50 sm:rounded-[1.2rem] sm:px-4">
                   <p className="luxury-meta text-xs uppercase tracking-[0.26em]">Long</p>
-                  <p className="mt-2 font-medium dark:text-foreground">
+                  <p className="mt-2 text-sm font-medium dark:text-foreground sm:text-base">
                     {fragrance.longevity || "Moderate"}
                   </p>
                 </div>
-                <div className="luxury-soft rounded-[1.2rem] px-4 py-3 dark:bg-background/50">
+                <div className="luxury-soft rounded-[1.1rem] px-3 py-3 dark:bg-background/50 sm:rounded-[1.2rem] sm:px-4">
                   <p className="luxury-meta text-xs uppercase tracking-[0.26em]">Trail</p>
-                  <p className="mt-2 font-medium dark:text-foreground">
+                  <p className="mt-2 text-sm font-medium dark:text-foreground sm:text-base">
                     {fragrance.sillage || "Moderate"}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col justify-between px-2 py-2">
+            <div className="flex flex-col justify-between px-1 py-1 sm:px-2 sm:py-2">
               <div>
-                <p className="luxury-meta text-[11px] uppercase tracking-[0.2em]">
+                <p className="luxury-meta text-[10px] uppercase tracking-[0.18em] sm:text-[11px] sm:tracking-[0.2em]">
                   {fragrance.brand}
                   {fragrance.country ? ` · ${fragrance.country}` : ""}
                   {fragrance.year ? ` · ${fragrance.year}` : ""}
                 </p>
-                <h1 className="mt-3 font-heading text-5xl tracking-tight text-luxury-ink dark:text-foreground md:text-6xl">
+                <h1 className="mt-3 font-heading text-4xl tracking-tight text-luxury-ink dark:text-foreground sm:text-5xl xl:text-6xl">
                   {fragrance.name}
                 </h1>
-                <p className="luxury-copy mt-4 max-w-2xl text-base leading-8">
+                <p className="luxury-copy mt-4 max-w-2xl text-sm leading-7 sm:text-base sm:leading-8">
                   {fragrance.generalNotes.slice(0, 6).join(" · ") || "Live catalog fragrance detail."}
                 </p>
               </div>
 
-              <div className="mt-8 space-y-6">
-                <div className="flex items-end justify-between gap-6 border-t border-border/60 pt-6">
+              <div className="mt-6 space-y-5 sm:mt-8 sm:space-y-6">
+                <div className="flex flex-col gap-4 border-t border-border/60 pt-5 sm:flex-row sm:items-end sm:justify-between sm:gap-6 sm:pt-6">
                   <div>
                     <p className="luxury-copy text-sm">Current price</p>
-                    <p className="mt-1 text-[3rem] leading-none font-medium tracking-[-0.05em] text-luxury-ink dark:text-foreground">
+                    <p className="mt-1 text-[2.4rem] leading-none font-medium tracking-[-0.05em] text-luxury-ink dark:text-foreground sm:text-[3rem]">
                       {formatPrice(fragrance.price)}
                     </p>
                   </div>
-                  <div className="text-right">
+                  <div className="text-left sm:text-right">
                     <p className="luxury-copy text-sm">Confidence</p>
                     <p className="mt-1 text-lg font-medium text-luxury-ink dark:text-foreground">
                       {fragrance.confidence || fragrance.priceValue || "N/A"}
@@ -379,7 +379,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                   {fragrance.accords.map((accord) => (
                     <span
                       key={accord}
-                      className="luxury-chip-soft rounded-[1rem] px-4 py-2 text-sm dark:bg-muted/30 dark:text-foreground"
+                      className="luxury-chip-soft rounded-[1rem] px-3 py-1.5 text-xs dark:bg-muted/30 dark:text-foreground sm:px-4 sm:py-2 sm:text-sm"
                     >
                       {accord}
                       {fragrance.accordStrengths[accord]
@@ -389,20 +389,20 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                   ))}
                 </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button className="rounded-[1.1rem]" asChild>
+                <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <Button className="w-full rounded-[1.1rem] sm:w-auto" asChild>
                     <Link href="/perfumes">Keep browsing</Link>
                   </Button>
                   <AddToCartButton
                     product={cartProduct}
                     variant="outline"
-                    className="rounded-[1.1rem]"
+                    className="w-full rounded-[1.1rem] sm:w-auto"
                   />
                   <AddToCartButton
                     product={cartProduct}
                     checkoutOnAdd
                     openCartOnAdd={false}
-                    className="rounded-[1.1rem]"
+                    className="w-full rounded-[1.1rem] sm:w-auto"
                   />
                 </div>
               </div>
@@ -447,7 +447,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                   </div>
 
                   <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div className="space-y-1">
+                    <div className="min-w-0 flex-1 space-y-1">
                       <p className="luxury-meta text-[11px] uppercase tracking-[0.24em]">
                         {layer.stage}
                       </p>
@@ -459,16 +459,16 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 sm:min-w-[9rem] sm:grid-cols-1">
-                      <div className="rounded-[1rem] border border-black/10 bg-white/55 px-3 py-2 text-luxury-ink backdrop-blur-sm sm:rounded-full sm:px-4 sm:text-right">
+                    <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end sm:self-start">
+                      <div className="rounded-full border border-black/10 bg-white/55 px-3 py-1.5 text-luxury-ink backdrop-blur-sm sm:px-3.5 sm:text-right">
                         <p className="luxury-meta text-[10px] uppercase tracking-[0.28em]">
                           Count
                         </p>
-                        <p className="mt-1 text-xl font-medium leading-none sm:text-2xl">
+                        <p className="mt-1 text-lg font-medium leading-none sm:text-xl">
                           {layer.items.length}
                         </p>
                       </div>
-                      <div className="rounded-[1rem] border border-black/8 bg-black/5 px-3 py-2 text-luxury-ink/90 sm:hidden">
+                      <div className="rounded-full border border-black/8 bg-black/5 px-3 py-1.5 text-luxury-ink/90 sm:hidden">
                         <p className="luxury-meta text-[10px] uppercase tracking-[0.28em]">
                           Phase
                         </p>
@@ -484,9 +484,9 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                       layer.items.map((note, index) => (
                         <div
                           key={`${layer.key}-${note.name}`}
-                          className={`flex items-center justify-between gap-3 rounded-[1rem] border border-black/6 px-3 py-2.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] ${layer.chipClass}`}
+                          className={`flex items-start justify-between gap-3 rounded-[1rem] border border-black/6 px-3 py-2.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] sm:items-center ${layer.chipClass}`}
                         >
-                          <span className="font-medium text-luxury-ink">{note.name}</span>
+                          <span className="min-w-0 font-medium text-luxury-ink">{note.name}</span>
                           <span className="luxury-meta shrink-0 text-[10px] uppercase tracking-[0.24em]">
                             {String(index + 1).padStart(2, "0")}
                           </span>
@@ -499,7 +499,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                     )}
                   </div>
 
-                  <div className="relative mt-3 grid grid-cols-3 gap-2 text-center">
+                  <div className="relative mt-3 grid grid-cols-1 gap-2 text-center sm:grid-cols-3">
                     <div className="rounded-[0.95rem] bg-white/45 px-2 py-2">
                       <p className="luxury-meta text-[10px] uppercase tracking-[0.22em]">Lift</p>
                       <p className="mt-1 text-sm font-medium text-luxury-ink">
@@ -523,7 +523,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
               ))}
             </div>
 
-            <div className="grid content-start gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            <div className="grid content-start gap-4 md:grid-cols-2 lg:grid-cols-1">
               <div className="rounded-[1.45rem] border border-border/70 bg-luxury-soft p-4 sm:rounded-[1.7rem] sm:p-5 dark:border-border/60 dark:bg-background/40">
                 <div className="flex items-center gap-3">
                   <div className="luxury-panel rounded-full p-2 text-luxury-ink dark:bg-muted/40 dark:text-foreground">
@@ -539,7 +539,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                   </div>
                 </div>
 
-                <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   <div className="luxury-panel rounded-[1.25rem] px-4 py-4 dark:bg-muted/30">
                     <p className="luxury-meta text-[11px] uppercase tracking-[0.22em]">
                       Dominant stage
@@ -618,7 +618,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                   {noteLayers.map((layer, index) => (
                     <div
                       key={`timeline-${layer.key}`}
-                      className="grid grid-cols-[auto_1fr] items-start gap-3"
+                      className="grid gap-2 sm:grid-cols-[auto_1fr] sm:items-start sm:gap-3"
                     >
                       <div className="luxury-panel flex size-8 items-center justify-center rounded-full text-xs font-medium text-luxury-ink dark:bg-muted/40 dark:text-foreground">
                         {index + 1}
@@ -670,7 +670,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
           </CardHeader>
 
           <CardContent className="space-y-4 px-4 pb-4 pt-4 sm:px-6 sm:pb-6 sm:pt-6">
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-1">
               <div className="rounded-[1.4rem] border border-white/10 bg-white/5 p-4 backdrop-blur-sm sm:rounded-[1.6rem] sm:p-5">
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -762,7 +762,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                       const percent = toRankingPercent(season.score)
 
                       return (
-                        <div key={season.name} className="grid grid-cols-[auto_1fr] gap-2 sm:gap-3">
+                        <div key={season.name} className="grid gap-2 sm:grid-cols-[auto_1fr] sm:gap-3">
                           <div className="flex size-8 items-center justify-center rounded-full bg-white/10 text-xs font-medium text-[#fff8ef]">
                             {index + 1}
                           </div>
@@ -814,7 +814,7 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
                       const percent = toRankingPercent(occasion.score)
 
                       return (
-                        <div key={occasion.name} className="grid grid-cols-[auto_1fr] gap-2 sm:gap-3">
+                        <div key={occasion.name} className="grid gap-2 sm:grid-cols-[auto_1fr] sm:gap-3">
                           <div className="flex size-8 items-center justify-center rounded-full bg-white/10 text-xs font-medium text-[#fff8ef]">
                             {index + 1}
                           </div>
@@ -854,11 +854,11 @@ export default async function FragranceDetailPage(props: PageProps<"/perfumes/[s
           <Badge variant="secondary" className="text-muted-foreground">
             Related picks
           </Badge>
-          <h2 className="font-heading text-3xl tracking-tight">
+          <h2 className="font-heading text-2xl tracking-tight sm:text-3xl">
             More from same scent family.
           </h2>
         </div>
-        <div className="grid auto-rows-fr items-stretch gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid auto-rows-fr items-stretch gap-6 lg:grid-cols-3">
           {related.map((item: (typeof related)[number]) => (
             <FragranceCard key={item.id} fragrance={item} />
           ))}

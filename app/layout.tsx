@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { CartProvider } from "@/components/cart-provider";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { GlobalSearchBar } from "@/components/global-search-bar";
+import { SiteFooter } from "@/components/site-footer";
 
 const playfairDisplayHeading = Playfair_Display({subsets:['latin'],variable:'--font-heading'});
 
@@ -63,6 +64,7 @@ export default function RootLayout({
               <GlobalSearchBar />
             </Suspense>
             {children}
+            <SiteFooter />
           </SmoothScroll>
         </CartProvider>
       </body>
