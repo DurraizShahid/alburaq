@@ -44,9 +44,7 @@ type CartContextValue = {
 
 const CartContext = React.createContext<CartContextValue | null>(null)
 
-function getInitialCartItems() {
-  if (typeof window === "undefined") return []
-
+function readStoredCartItems() {
   try {
     const stored = window.localStorage.getItem(CART_STORAGE_KEY)
     return stored ? sanitizeCartItems(JSON.parse(stored)) : []
@@ -54,10 +52,6 @@ function getInitialCartItems() {
     window.localStorage.removeItem(CART_STORAGE_KEY)
     return []
   }
-}
-
-function subscribeToHydration() {
-  return () => {}
 }
 
 export function useCart() {
@@ -175,10 +169,15 @@ function CartSheetBody({
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = React.useState<CartItem[]>(() => getInitialCartItems())
+  const [items, setItems] = React.useState<CartItem[]>([])
   const [isOpen, setIsOpen] = React.useState(false)
-  const hasHydrated = React.useSyncExternalStore(subscribeToHydration, () => true, () => false)
+  const [hasHydrated, setHasHydrated] = React.useState(false)
   const isMobile = useIsMobile()
+
+  React.useEffect(() => {
+    setItems(readStoredCartItems())
+    setHasHydrated(true)
+  }, [])
 
   React.useEffect(() => {
     if (!hasHydrated) return

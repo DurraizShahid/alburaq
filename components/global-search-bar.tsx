@@ -18,6 +18,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { useHasMounted } from "@/hooks/use-has-mounted"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -500,6 +501,7 @@ export function GlobalSearchBar() {
 function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
   const router = useRouter()
   const { itemCount, openCart, hasHydrated } = useCart()
+  const hasMounted = useHasMounted()
   const isMobile = useIsMobile()
   const headerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -931,7 +933,7 @@ function GlobalSearchBarInner({ defaultQuery }: { defaultQuery: string }) {
               <span className="sm:hidden">Cart</span>
               <span className="hidden sm:inline">Open Cart</span>
               <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] leading-none text-primary">
-                {hasHydrated ? itemCount : 0}
+                {hasMounted && hasHydrated ? itemCount : 0}
               </span>
             </Button>
 

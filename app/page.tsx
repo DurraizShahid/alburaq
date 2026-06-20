@@ -1169,10 +1169,63 @@ export default function Home() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                  {homepage.recent.map((item) => (
-                    <FragranceCard key={item.id} fragrance={item} />
-                  ))}
+                <div className="divide-y divide-border/60 border-y border-border/60">
+                  {homepage.recent.map((item) => {
+                    const imageSrc = item.transparentImageUrl || item.imageUrl
+                    const notePreview = item.notes.slice(0, 3).join(" · ") || item.accords.slice(0, 3).join(" · ")
+                    const brandLine = [item.brand, item.year].filter(Boolean).join(" · ")
+
+                    return (
+                      <article
+                        key={item.id}
+                        className="grid gap-4 py-5 md:grid-cols-[132px_minmax(0,1fr)_auto] md:items-center"
+                      >
+                        <Link
+                          href={`/perfumes/${item.slug}`}
+                          className="luxury-canvas relative mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-[1.35rem] border border-border/50 bg-background/70 p-3 md:mx-0"
+                        >
+                          <Image
+                            src={imageSrc}
+                            alt={item.name}
+                            fill
+                            unoptimized
+                            sizes="128px"
+                            className="object-contain p-3"
+                          />
+                        </Link>
+
+                        <div className="min-w-0 space-y-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Badge variant="secondary">{item.family}</Badge>
+                            <Badge variant="secondary">{item.oilType}</Badge>
+                          </div>
+                          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                            {brandLine}
+                          </p>
+                          <Link href={`/perfumes/${item.slug}`} className="block">
+                            <h3 className="text-2xl font-medium tracking-[-0.03em] text-luxury-ink transition-colors hover:text-primary">
+                              {item.name}
+                            </h3>
+                          </Link>
+                          <p className="text-sm leading-7 text-muted-foreground">
+                            {item.description}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {notePreview}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-3 md:items-end">
+                          <p className="text-2xl font-medium tracking-[-0.03em] text-luxury-ink">
+                            {item.price}
+                          </p>
+                          <Button variant="outline" asChild>
+                            <Link href={`/perfumes/${item.slug}`}>View details</Link>
+                          </Button>
+                        </div>
+                      </article>
+                    )
+                  })}
                 </div>
 
                 <div className="flex flex-wrap gap-2">
